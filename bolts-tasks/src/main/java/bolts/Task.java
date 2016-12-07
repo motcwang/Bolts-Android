@@ -312,6 +312,22 @@ public class Task<TResult> {
   }
 
   /**
+   * Invokes the callable on UI thread, returning a Task to represent the operation.
+   * If you want to cancel the resulting Task throw a {@link java.util.concurrent.CancellationException}
+   * from the callable.
+   */
+  public static <TResult> Task<TResult> callInUIThread(Callable<TResult> callable) {
+    return call(callable, UI_THREAD_EXECUTOR, null);
+  }
+
+  /**
+   * Invokes the callable on UI thread, returning a Task to represent the operation.
+   */
+  public static <TResult> Task<TResult> callInUIThread(Callable<TResult> callable, CancellationToken ct) {
+    return call(callable, UI_THREAD_EXECUTOR, ct);
+  }
+
+  /**
    * Invokes the callable on a background thread, returning a Task to represent the operation.
    *
    * If you want to cancel the resulting Task throw a {@link java.util.concurrent.CancellationException}
